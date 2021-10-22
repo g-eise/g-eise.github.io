@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const IntroText = styled.h1`
+    position: absolute;
+    top: 40vh;
+    width: 100vw;
+    text-align: center;
+    opacity: 1;
     margin: 0;
+    transition: opacity 1s ease-in-out;
+    transition-delay: 1.5s;
 `;
 const Backdrop = styled.div`
     position: fixed;
@@ -10,12 +17,14 @@ const Backdrop = styled.div`
     height: 100vh;
     background: #121212;
     color: white;
-    text-align: center;
-    padding: 40vh 0;
     user-select: none; 
     cursor: pointer;
     font-family: 'Marcellus SC', serif;
     font-size: 58px;
+    .invisible {
+        transition-delay: 0s !important;
+        opacity: 0;
+    }
 `;
 const introText = [
     'Hello',
@@ -28,15 +37,23 @@ const Intro = ({ onFinish }) => {
 
     const goToNextStep = () => {
         if(step + 1 === introText.length) {
-            onFinish();
-        } else {
-            setStep(step + 1);
+            setTimeout(() => {
+                onFinish();
+            }, 2000);
         }
+        setStep(step + 1);
     }
+    useEffect(() => {
+        window.addEventListener('keydown', goToNextStep);
+        return () => {
+            window.removeEventListener('keydown', goToNextStep);
+        }
+    });
 
     return (
         <Backdrop onClick={goToNextStep}>
-            <IntroText>{introText[step]}</IntroText>
+            {introText.map((text, idx) => <IntroText className={idx == step?'':'invisible'}>{text}</IntroText>)}
+            
         </Backdrop>
     );
 }
