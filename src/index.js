@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './utils/index.css';
 import {
-	BrowserRouter,
+	HashRouter,
 	Routes,
 	Route
   } from "react-router-dom";
@@ -14,7 +14,7 @@ import { BIBLIOGRAPHY, CREDITS, HOME, INTRO, READ } from './utils/navigation';
 import Content from './components/Content';
 
 ReactDOM.render(
-	<BrowserRouter>
+	<HashRouter basename='/'>
 	    <Routes>
 			<Route path={INTRO} element={<Intro />} />
 			<Route path={HOME} element={<Home />} />
@@ -24,6 +24,6 @@ ReactDOM.render(
 				<Route path=":index" element={<Content />} />
 			</Route>
 		</Routes>
-	</BrowserRouter>,
+	</HashRouter>,
 	document.getElementById('root')
 );
