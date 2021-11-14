@@ -9,7 +9,7 @@ const Button = styled.div`
     top: 30px;
     padding: 10px 36px;
     border-radius: 5px;
-    background-color: #2e2e2e;
+    background-color: #3e3e3e94;
     cursor: pointer;
     font-family: 'Poppins';
     :hover {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 import { HOME } from '../utils/navigation';
+import { useLock } from '../utils/hooks';
 
 const IntroText = styled.h1`
     position: absolute;
@@ -31,13 +32,13 @@ const Backdrop = styled.div`
 const introText = [
     'Hello',
     'Welcome to the',
-    'Lord of the odyssey'
+    'Lord of the Odyssey'
 ];
 
 const Intro = () => {
+    const { setLock } = useLock();
     const [step, setStep] = useState(0);
     const navigate = useNavigate();
-
 
     const goToNextStep = () => {
         if(step + 1 === introText.length) {
@@ -48,6 +49,7 @@ const Intro = () => {
         setStep(step + 1);
     }
     useEffect(() => {
+        setLock(0);
         window.addEventListener('keydown', goToNextStep);
         return () => {
             window.removeEventListener('keydown', goToNextStep);

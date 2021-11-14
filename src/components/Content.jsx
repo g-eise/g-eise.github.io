@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import BackBtn from './BackBtn';
 import { characters } from '../utils/characters';
+import { useLock } from '../utils/hooks';
 
-const romanize = (num) => {
+export const romanize = (num) => {
     const lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
     let roman = ''
     for (var i in lookup ) {
@@ -17,7 +18,7 @@ const romanize = (num) => {
 }
 
 const Container = styled.div`
-    animation: fade_in 1s ease-in-out;
+    animation: fade_in .5s ease-in-out;
     @keyframes fade_in {
       0%   {opacity: 0;}
       100% {opacity: 1;}
@@ -32,17 +33,15 @@ const Container = styled.div`
     .text {
         margin-top: 100px;
         width: 100%;
-        p {
-            font-family: 'Roboto', sans-serif;
+        > div {
+            font-family: 'Poppins',sans-serif;
             text-align: justify;
-            ::first-letter {
-                font-size: 200%;
-            }
-            line-height: 150%;
-            font-size: 125%;
-            width: 50%;
+            font-size: 100%;
+            width: 70%;
             margin: auto;
+            white-space: pre-wrap;
         }
+        margin-bottom: 100px;
     }
     .img {
         width: 100%;
@@ -57,9 +56,14 @@ const Container = styled.div`
 `;
 
 const Content = (props) => {
+    const { setLock, lock } = useLock();
     const { index } = useParams();
     const parsedIndex = parseInt(props.index || index);
     const { title, photo, text } = characters[parsedIndex-1];
+
+    if (lock < parsedIndex) {
+        setLock(parsedIndex);
+    }
     return (
         <div>
             <BackBtn />
@@ -69,7 +73,9 @@ const Content = (props) => {
                     <img src={`/images/${photo}`} id="contentImg" />
                 </div>
                 <div className='text'>
-                    <p>{text}</p>
+                    <div>
+                        {text}
+                    </div>
                 </div>
             </Container>
         </div>
