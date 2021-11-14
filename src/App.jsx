@@ -10,7 +10,7 @@ const states = {
 };
 
 function App() {
-	const [state, setState] = useState(states.intro);
+	const [state, setState] = useState(states.game);
 	const onIntroFinish = () => {
 		setState(states.game);
 	}

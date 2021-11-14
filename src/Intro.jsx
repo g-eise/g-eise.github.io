@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
+import { HOME } from './navigation';
 
 const IntroText = styled.h1`
     position: absolute;
@@ -29,16 +31,18 @@ const Backdrop = styled.div`
 const introText = [
     'Hello',
     'Welcome to the',
-    'Lord of the oddesy'
+    'Lord of the odyssey'
 ];
 
-const Intro = ({ onFinish }) => {
+const Intro = () => {
     const [step, setStep] = useState(0);
+    const navigate = useNavigate();
+
 
     const goToNextStep = () => {
         if(step + 1 === introText.length) {
             setTimeout(() => {
-                onFinish();
+                navigate(HOME);
             }, 2000);
         }
         setStep(step + 1);
