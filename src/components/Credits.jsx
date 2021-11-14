@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { HOME } from './navigation';
+import BackBtn from './BackBtn';
 
 const Credits = () => {
     return (
         <div>
-            <Link to={HOME} >back</Link>
+            <BackBtn />
             credits
         </div>
     );

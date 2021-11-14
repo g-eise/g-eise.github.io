@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
-import { HOME } from './navigation';
+import { HOME } from '../utils/navigation';
 
 const IntroText = styled.h1`
     position: absolute;

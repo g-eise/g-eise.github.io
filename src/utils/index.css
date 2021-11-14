@@ -17,5 +17,5 @@ body {
 	opacity: 0;
 }
 .react-flow__node {
-	width: unset !important;
+	width: 2ch !important;
 }
