@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useForceRefresh = () => {
     const [refreshCount, forceRefresh] = useState(0);
-    return () => {
+    return useCallback(() => {
         forceRefresh(refreshCount + 1);
-    }
+    }, [refreshCount]);
 }
 export const useLock = () => {
     const forceRefresh = useForceRefresh();
@@ -14,14 +14,16 @@ export const useLock = () => {
 	}
 	const lock = parseInt(sessionStorage.getItem("unlocked"));
 
-    const unlockAll = () => {
+    const unlockAll = useCallback(() => {
         sessionStorage.setItem("unlocked", Number.MAX_SAFE_INTEGER);
         forceRefresh()
-    }
-    const setLock = (v) => {
+    }, [forceRefresh]);
+    
+    const setLock = useCallback((v) => {
         sessionStorage.setItem("unlocked", v);
         forceRefresh();
-    }
+    }, [forceRefresh])
+
     return {
         lock,
         unlockAll,

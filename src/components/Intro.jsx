@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 import { HOME } from '../utils/navigation';
@@ -40,25 +40,30 @@ const Intro = () => {
     const [step, setStep] = useState(0);
     const navigate = useNavigate();
 
-    const goToNextStep = () => {
+    const goToNextStep = useCallback(() => {
         if(step + 1 === introText.length) {
             setTimeout(() => {
                 navigate(HOME);
             }, 2000);
         }
         setStep(step + 1);
-    }
+    }, [step, navigate]);
+
     useEffect(() => {
         setLock(0);
+        sessionStorage.setItem("mapAnimated", false);
+    }, []);
+
+    useEffect(() => {
         window.addEventListener('keydown', goToNextStep);
         return () => {
             window.removeEventListener('keydown', goToNextStep);
         }
-    });
+    }, [goToNextStep]);
 
     return (
         <Backdrop onClick={goToNextStep}>
-            {introText.map((text, idx) => <IntroText className={idx == step?'':'invisible'}>{text}</IntroText>)}
+            {introText.map((text, idx) => <IntroText key={idx} className={idx === step?'':'invisible'}>{text}</IntroText>)}
             
         </Backdrop>
     );

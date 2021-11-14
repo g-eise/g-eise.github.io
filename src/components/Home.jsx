@@ -101,7 +101,7 @@ const Game = () => {
 
             <div className='essay'>
             {
-                unlocked.map(({title, text}, index) => <div>
+                unlocked.map(({title, text}, index) => <div key={index}>
                     <h3>{`${romanize(index+1)}. ${title}`}</h3>
                     <div className="text">
                         <div>

@@ -70,7 +70,7 @@ const Content = (props) => {
             <Container>
                 <h3>{`${romanize(parsedIndex)}. ${title}`}</h3>
                 <div className='img'>
-                    <img src={`/images/${photo}`} id="contentImg" />
+                    <img alt='character' src={`/images/${photo}`} id="contentImg" />
                 </div>
                 <div className='text'>
                     <div>
