@@ -28,6 +28,14 @@ const Backdrop = styled.div`
         transition-delay: 0s !important;
         opacity: 0;
     }
+    .continueText {
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        font-size: 18pt;
+        position: fixed;
+        right: 50px;
+        bottom: 20px;
+    }
 `;
 const introText = [
     'Hello',
@@ -64,7 +72,7 @@ const Intro = () => {
     return (
         <Backdrop onClick={goToNextStep}>
             {introText.map((text, idx) => <IntroText key={idx} className={idx === step?'':'invisible'}>{text}</IntroText>)}
-            
+            <div className='continueText'>Press any key to continue...</div>
         </Backdrop>
     );
 }

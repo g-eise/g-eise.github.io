@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
 export const useForceRefresh = () => {
     const [refreshCount, forceRefresh] = useState(0);
@@ -30,3 +31,12 @@ export const useLock = () => {
         setLock
     }
 }
+
+export const ScrollToTop = (props) => {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  return <>{props.children}</>
+};

@@ -19,3 +19,21 @@ body {
 .react-flow__node {
 	width: 2ch !important;
 }
+
+.MsoNormal {
+	background: none !important;
+}
+.MsoNormal span, p {
+	color: white !important;
+	font-family: 'Poppins', sans-serif !important;
+	font-size: 100% !important;
+}
+
+@keyframes fade_in {
+	0%   {opacity: 0;}
+	100% {opacity: 1;}
+}
+@keyframes fade_out {
+	0%   {opacity: 1;}
+	100% {opacity: 0;}
+}
