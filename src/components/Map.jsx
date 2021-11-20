@@ -71,6 +71,7 @@ const Map = () => {
 					height="50" 
 					href={`/images/${photo}`}
 					onClick={() => navigate(`/${READ}/${index+1}`)}
+					preserveAspectRatio="xMidYMid slice"
 				/>
 				{(index > lock) && <>
 					<rect 

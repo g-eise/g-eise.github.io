@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { HOME } from '../utils/navigation';
 import { useLock } from '../utils/hooks';
 
+
 const IntroText = styled.h1`
     position: absolute;
     top: 40vh;

@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BIBLIOGRAPHY, CREDITS } from '../utils/navigation';
 import { useLock } from '../utils/hooks';
 import Map from './Map';
 import { characters } from '../utils/characters';
-import { romanize } from './Essay';
-import Content from './Content';
+import Essay from './Essay';
 
   
 const Container = styled.div`
@@ -82,8 +81,57 @@ const Container = styled.div`
 	}
 `;
 
+const Modal = styled.div`
+	.backdrop {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: #000000a0;
+	}
+	.modal-body {
+		position: fixed;
+		top: 10vh;
+		width: 100vw;
+		pointer-events: none;
+		> div {
+			pointer-events: all;
+			margin: auto;
+			max-width: 35vw;
+			background: #121212;
+			padding: 17px 35px 35px 35px;
+			border-radius: 5px;
+			box-shadow: 0px 0px 18px 5px #000000;
+			font-family: 'Poppins', sans-serif;
+			.buttons {
+				display: flex;
+				justify-content:flex-end;
+				margin-top: 35px;
+				.button {
+					cursor: pointer;
+					background-color: #282828;
+					color: white;
+					padding: 7px 15px;
+					cursor: pointer;
+					border-radius: 5px;
+					margin-left: 16px;
+					:hover {
+						background-blend-mode: darken;
+						color: black;
+						background-color: white;
+					}
+
+				}
+			}
+		}
+	}
+`;
+
 const Home = () => {
 	const { unlockAll, lock } = useLock();
+	const [unlockModal, setUnlockModalOpen] = useState(false);
+
 	return (
 		<Container>
 			<div className='header'>
@@ -91,7 +139,9 @@ const Home = () => {
 				<div className='sidebar'>
 					<Link to={`/${BIBLIOGRAPHY}`}>Bibliography</Link>
 					<Link to={`/${CREDITS}`}>Credits</Link>
-					<div onClick={unlockAll} >Reading Mode</div>
+					{characters.length > lock && 
+						<div onClick={() => setUnlockModalOpen(true)} >Reading Mode</div>
+					}
 				</div>
 				<div className="content">
 					<h3 id='title'>Lord of the Odyssey</h3>
@@ -100,16 +150,27 @@ const Home = () => {
 			</div>
 
 			{characters.length <= lock && 
-			<div className='essay'>
-
-				{characters.map(({title, text}, index) => 
-				<Content key={index} title={`${romanize(index+1)}. ${title}`}>
-							{text}
-				</Content>
-				)}
+				<div className='essay'>
+					{characters.map((_, index) => 
+					<Essay key={index} index={index+1} noImage />
+					)}
 				</div>
-
 			}
+
+			{unlockModal && <Modal>
+					<div className='backdrop' onClick={() => setUnlockModalOpen(false)} />
+					<div className='modal-body'>
+						<div>
+							<h2>Enable Reading Mode?</h2>
+						Are you sure you want to enable reading mode and unlock all of the characters? You won't be able to play through the game.
+						<div className='buttons'>
+							<div className='button' onClick={() => setUnlockModalOpen(false)} >cancel</div>
+							<div className='button' onClick={() => {unlockAll();setUnlockModalOpen(false)}} >unlock</div>
+						</div>
+						</div>
+					</div>
+				
+				</Modal>}
 		</Container>
 
 	);

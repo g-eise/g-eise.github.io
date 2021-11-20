@@ -18,12 +18,17 @@ const Container = styled.div`
         > div {
             font-family: 'Poppins',sans-serif !important;
             text-align: justify;
-            font-size: 100% !important;
+            font-size: 12pt !important;
             width: 70%;
             margin: auto;
-        }
-        >div:not(.noPreWrap) {
             white-space: pre-wrap;
+        }
+        .noPreWrap {
+            white-space: normal !important;
+        }
+        .noPreWrap > * {
+            white-space: normal;
+ 
         }
         margin-bottom: 100px;
     }
@@ -50,7 +55,6 @@ const Container = styled.div`
 
 const Content = ({title, image, children}) => {
     const location = useLocation();
-
     return (
         <div>
              {location.pathname !== `/${HOME}` && <BackBtn />}

@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './utils/index.css';
 import {
 	HashRouter,
 	Routes,
 	Route,
-	withRouter
 } from "react-router-dom";
 import Home from './components/Home';
 import Intro from './components/Intro';

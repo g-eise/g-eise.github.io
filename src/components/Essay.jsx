@@ -24,7 +24,7 @@ const Essay = (props) => {
     const { index } = useParams();
     const [innerHTML, setInnerHTML] = useState('<div style="text-align:center">loading...</div>');
     const parsedIndex = parseInt(props.index || index);
-    const { title, photo, text } = characters[parsedIndex-1] || {};
+    const { title, photo } = characters[parsedIndex-1] || {};
 
     if (lock < parsedIndex) {
         setLock(parsedIndex);
@@ -32,7 +32,7 @@ const Essay = (props) => {
 
     useEffect(() => {
         const { protocol, host } = window.location;
-        fetch(`${protocol}//${host}/essay/${index}.html`).then(response => {
+        fetch(`${protocol}//${host}/essay/${parsedIndex}.html`).then(response => {
                 response.text().then(res => setInnerHTML(res)); 
             }
         ).catch(err => setInnerHTML('<div style="text-align:center">Failed to load document</div>'));
@@ -40,7 +40,7 @@ const Essay = (props) => {
 
     return (
         <Content
-            image={`/images/${photo}`}
+            image={props.noImage?false:`/images/${photo}`}
             title={`${romanize(parsedIndex)}. ${title}`}
         >
             <RenderHTML HTML={innerHTML} />
