@@ -20,7 +20,7 @@ const Button = styled.div`
 const BackBtn = () => {
     const navigate = useNavigate()
 
-    return <Button onClick={() => navigate(`/${HOME}`)}>Back</Button>;
+    return <Button className='back-btn' onClick={() => navigate(`/${HOME}`)}>Back</Button>;
 
 }
 

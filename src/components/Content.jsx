@@ -5,12 +5,18 @@ import { useLocation } from 'react-router-dom'
 import { HOME } from '../utils/navigation';
 
 const Container = styled.div`
-    animation: fade_in .5s ease-in-out;
+    /* animation: fade_in .5s ease-in-out; */
     h3 {
         font-family: 'Marcellus SC';
         font-size: 200%;
         width: 100%;
-        text-align: center;
+        span {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            width: fit-content;
+            margin: auto;
+        }
     }
     .text {
         margin-top: 100px;
@@ -59,7 +65,7 @@ const Content = ({title, image, children}) => {
         <div>
              {location.pathname !== `/${HOME}` && <BackBtn />}
              <Container>
-                 {title && <h3>{title}</h3>}
+                 {title && <h3><span>{title}</span></h3>}
                  {image && <div className='img'>
                      <img alt='character' src={image} id="contentImg" />
                  </div>}

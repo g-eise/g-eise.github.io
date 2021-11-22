@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { characters } from '../utils/characters';
 import { READ } from '../utils/navigation';
@@ -45,9 +44,8 @@ const vertical = v => `v ${v} `;
 const horizontal = v => `h ${v} `;
 const curve = (a,b,c,d) => `q ${5*a} ${5*b}, ${5*c} ${5*d} `;
 
-const Map = () => {
+const Map = ({ goToEssay }) => {
 	const { lock } = useLock();
-	const navigate = useNavigate();
 
 	const animated = sessionStorage.getItem("mapAnimated") === 'true';
 	if (!animated) {
@@ -65,12 +63,13 @@ const Map = () => {
 			<svg viewBox="-20 0 540 500">
 				{characters.map(({position, photo}, index) => <React.Fragment key={index}>
 				<image 
+					id={`photo-${index}`}
 					x={position.x}
 					y={position.y}
 					width="50"
 					height="50" 
 					href={`/images/${photo}`}
-					onClick={() => navigate(`/${READ}/${index+1}`)}
+					onClick={() => goToEssay(index)}
 					preserveAspectRatio="xMidYMid slice"
 				/>
 				{(index > lock) && <>

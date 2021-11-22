@@ -23,7 +23,7 @@ const Essay = (props) => {
     const { setLock, lock } = useLock();
     const { index } = useParams();
     const [innerHTML, setInnerHTML] = useState('<div style="text-align:center">loading...</div>');
-    const parsedIndex = parseInt(props.index || index);
+    const parsedIndex = parseInt(props.index+1 || index);
     const { title, photo } = characters[parsedIndex-1] || {};
 
     if (lock < parsedIndex) {

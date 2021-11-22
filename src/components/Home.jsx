@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { BIBLIOGRAPHY, CREDITS } from '../utils/navigation';
+import { BIBLIOGRAPHY, CREDITS, READ } from '../utils/navigation';
 import { useLock } from '../utils/hooks';
 import Map from './Map';
 import { characters } from '../utils/characters';
@@ -118,7 +118,7 @@ const Modal = styled.div`
 					margin-left: 16px;
 					:hover {
 						background-blend-mode: darken;
-						color: black;
+						color: #121212;
 						background-color: white;
 					}
 
@@ -128,9 +128,130 @@ const Modal = styled.div`
 	}
 `;
 
+const EssayTransitionContainer = styled.div`
+	.essay-transition-background {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: #1a1a1a;
+		animation: fade_in 1s ease-in-out;
+	}
+	.essay-container {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		animation: fade_in 1s ease-in-out;
+
+		/* opacity: 0; */
+		/* pointer-events: none; */
+		@keyframes a-ltr-after{
+			0% {transform: translateX(-100%)}
+			100% {transform: translateX(101%)}
+		}
+
+		@keyframes a-ltr-before{
+			0% {transform: translateX(0)}
+			100% {transform: translateX(200%)}
+		}
+
+		h3>span::after{
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			background: white;
+			animation: a-ltr-after 2s cubic-bezier(.77,0,.18,1) forwards;
+			transform: translateX(-101%);
+			animation-delay: 2s;
+		}
+
+		h3>span::before{
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			background: #1a1a1a;
+			animation: a-ltr-before 2s cubic-bezier(.77,0,.18,1) forwards;
+			transform: translateX(0);
+			animation-delay: 2s;
+		}
+
+		.img {
+			opacity: 0;
+		}
+		@keyframes fade_inl {
+			0%   {opacity: 0;}
+			66%   {opacity: 0;}
+			100% {opacity: 1;}
+		}
+		.noPreWrap, .back-btn {
+			animation: fade_inl 3s ease-in-out;
+		}
+
+	}
+
+	.transition-img {
+		position: fixed;
+		border-radius: 5px;
+	}
+`;
+
+const EsssayTransition = ({ index }) => {
+	const navigate = useNavigate();
+	const { photo } = characters[index];
+	const imageRef = useRef(null);
+
+	useEffect(() => {
+			const start = document.getElementById(`photo-${index}`);
+			const target = document.querySelector('img');
+			const image = imageRef.current;
+
+			if (start && target && image) {
+				const startRect = start.getBoundingClientRect();
+				const targetRect = target.getBoundingClientRect();
+
+				image.style.top = startRect.top+'px';
+				image.style.left = startRect.left+'px';
+				image.style.width = startRect.width+'px';
+				image.style.height = startRect.height+'px';
+
+				image.style.transition = 'all 1s';
+
+				setTimeout(() => {
+					image.style.top = targetRect.top+'px';
+					image.style.left = targetRect.left+'px';
+					image.style.width = targetRect.width+'px';
+					image.style.height = targetRect.height+'px';
+					image.style.borderRadius = '15px';
+
+					setTimeout(() => {
+						navigate(`/${READ}/${index+1}`);
+					}, 3000);
+				}, 1000);
+			}
+	}, []);
+
+	return (<EssayTransitionContainer>
+		<div className='essay-transition-background' />
+		<div className='essay-container'>
+			<Essay index={index} />;
+		</div>
+		<img className='transition-img' ref={imageRef} src={`/images/${photo}`}></img>
+	</EssayTransitionContainer>)
+}
+
 const Home = () => {
 	const { unlockAll, lock } = useLock();
 	const [unlockModal, setUnlockModalOpen] = useState(false);
+	const [transitionToEssay, setTransitonToEssay] = useState(undefined);
 
 	return (
 		<Container>
@@ -145,7 +266,7 @@ const Home = () => {
 				</div>
 				<div className="content">
 					<h3 id='title'>Lord of the Odyssey</h3>
-					<Map />
+					<Map goToEssay={setTransitonToEssay} />
 				</div>
 			</div>
 
@@ -171,6 +292,8 @@ const Home = () => {
 					</div>
 				
 				</Modal>}
+			
+			{!isNaN(transitionToEssay) && <EsssayTransition index={transitionToEssay} />}
 		</Container>
 
 	);
