@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from "react-router-dom";
 import Content from './Content';
 import { characters } from '../utils/characters';
 import { useLock } from '../utils/hooks';
-
+import { HOME } from '../utils/navigation';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const romanize = (num) => {
     const lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
@@ -17,33 +19,48 @@ export const romanize = (num) => {
     return roman;
 }
 
-const RenderHTML = (props) => (<div className='noPreWrap' dangerouslySetInnerHTML={{__html:props.HTML}}></div>)
+const BackReminder = styled.div`
+    border-top: 2px solid #525252;
+    padding: 1rem;
+    display: flex;
+    span {
+        line-height: 2em;
+        margin-left: 10px;
+    }
+    img {
+        filter: invert(1);
+        height: 2em;
+    }
+`;
 
 const Essay = (props) => {
     const { setLock, lock } = useLock();
     const { index } = useParams();
-    const [innerHTML, setInnerHTML] = useState('<div style="text-align:center">loading...</div>');
     const parsedIndex = parseInt(props.index+1 || index);
-    const { title, photo } = characters[parsedIndex-1] || {};
+    const { header, title, photo, content } = characters[parsedIndex-1] || {};
 
     if (lock < parsedIndex) {
         setLock(parsedIndex);
     }
 
-    useEffect(() => {
-        const { protocol, host } = window.location;
-        fetch(`${protocol}//${host}/essay/${parsedIndex}.html`).then(response => {
-                response.text().then(res => setInnerHTML(res)); 
-            }
-        ).catch(err => setInnerHTML('<div style="text-align:center">Failed to load document</div>'));
-    }, []);
+    const location = useLocation();
 
     return (
         <Content
             image={props.noImage?false:`/images/${photo}`}
-            title={`${romanize(parsedIndex)}. ${title}`}
+            title={title}
+            header={header}
+            index={parsedIndex}
         >
-            <RenderHTML HTML={innerHTML} />
+            {content}
+            {
+                location.pathname !== `/${HOME}` &&
+                <BackReminder>
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAApklEQVRIie3VsQ3CMBBG4Q9SQccIzMASIPagZQIYJjMwRygpoIOSAdJEoYBIKQIISGIKP+kv7Sef7s5EIpFmBkhCiPc4Yda3uHwkxzqEuEqKcQhxiQzTEOISV8zfHV7i8uKSb1Ng4975jZw7kNazw+STcrWZg8e8D589v0+ClXrRkbzAVkfV/Wmc2hYHWSApRl1L6+Icqz6EFRmOAnyLiT/ZCZFIOG6qFaYUmGD6UQAAAABJRU5ErkJggg=="/>
+                    <span>Click ‘back’ in the top left-hand corner and scroll down to see a new section of the Home Page!</span>
+                </BackReminder>
+            }
+
         </Content>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { characters } from '../utils/characters';
-import { READ } from '../utils/navigation';
 import { useLock } from '../utils/hooks';
 
 const Container = styled.div`

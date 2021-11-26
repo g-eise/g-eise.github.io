@@ -17,10 +17,11 @@ const Button = styled.div`
         color: black;
     }
 `;
-const BackBtn = () => {
+const BackBtn = ({ onClick }) => {
     const navigate = useNavigate()
+    const goHome = () => navigate(`/${HOME}`);
 
-    return <Button className='back-btn' onClick={() => navigate(`/${HOME}`)}>Back</Button>;
+    return <Button className='back-btn' onClick={onClick||goHome}>Back</Button>;
 
 }
 

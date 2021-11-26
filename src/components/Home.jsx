@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { BIBLIOGRAPHY, CREDITS, READ } from '../utils/navigation';
 import { useLock } from '../utils/hooks';
 import Map from './Map';
@@ -70,7 +70,7 @@ const Container = styled.div`
 			width: 100%;
 			> div {
 				font-family: 'Poppins',sans-serif;
-				text-align: justify;
+				text-align: left;
 				font-size: 100%;
 				width: 70%;
 				margin: auto;
@@ -128,7 +128,15 @@ const Modal = styled.div`
 	}
 `;
 
+const NoScroll = createGlobalStyle`
+	html, body {
+		margin: 0 !important;
+		height: 100% !important;
+		overflow: hidden !important;
+	}
+`
 const EssayTransitionContainer = styled.div`
+	
 	.essay-transition-background {
 		position: absolute;
 		top: 0;
@@ -192,7 +200,7 @@ const EssayTransitionContainer = styled.div`
 			66%   {opacity: 0;}
 			100% {opacity: 1;}
 		}
-		.noPreWrap, .back-btn {
+		.text, .back-btn {
 			animation: fade_inl 3s ease-in-out;
 		}
 
@@ -211,7 +219,7 @@ const EsssayTransition = ({ index }) => {
 
 	useEffect(() => {
 			const start = document.getElementById(`photo-${index}`);
-			const target = document.querySelector('img');
+			const target = document.querySelector('.img>img');
 			const image = imageRef.current;
 
 			if (start && target && image) {
@@ -240,6 +248,7 @@ const EsssayTransition = ({ index }) => {
 	}, []);
 
 	return (<EssayTransitionContainer>
+		<NoScroll />
 		<div className='essay-transition-background' />
 		<div className='essay-container'>
 			<Essay index={index} />;
@@ -273,7 +282,7 @@ const Home = () => {
 			{characters.length <= lock && 
 				<div className='essay'>
 					{characters.map((_, index) => 
-					<Essay key={index} index={index+1} noImage />
+					<Essay key={index} index={index} noImage />
 					)}
 				</div>
 			}

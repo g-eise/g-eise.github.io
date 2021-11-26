@@ -10,12 +10,15 @@ const Container = styled.div`
         font-family: 'Marcellus SC';
         font-size: 200%;
         width: 100%;
-        span {
+        > span {
             position: relative;
             display: block;
             overflow: hidden;
             width: fit-content;
             margin: auto;
+        }
+        .content-header {
+            text-decoration: underline;
         }
     }
     .text {
@@ -23,7 +26,7 @@ const Container = styled.div`
         width: 100%;
         > div {
             font-family: 'Poppins',sans-serif !important;
-            text-align: justify;
+            text-align: left;
             font-size: 12pt !important;
             width: 70%;
             margin: auto;
@@ -57,15 +60,23 @@ const Container = styled.div`
             text-decoration: none;
         }
     }
+    p {
+        text-indent: 3em;
+    }
 `;
 
-const Content = ({title, image, children}) => {
+const Content = ({title, header, image, children}) => {
     const location = useLocation();
     return (
         <div>
              {location.pathname !== `/${HOME}` && <BackBtn />}
              <Container>
-                 {title && <h3><span>{title}</span></h3>}
+                 {title && <h3>
+                            <span>
+                                {header && <><span className='content-header'>{header}</span><span>: </span></>}
+                                <span>{title}</span>
+                            </span>
+                        </h3>}
                  {image && <div className='img'>
                      <img alt='character' src={image} id="contentImg" />
                  </div>}
