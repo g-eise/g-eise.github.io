@@ -44,11 +44,12 @@ const Container = styled.div`
     .img {
         width: 100%;
         img {
+            object-fit: cover;
             border-radius: 15px;
             display: block;
             margin: auto;
             width: 17em;
-            height: 17em;
+            /* height: 17em; */
         }
     }
     a {

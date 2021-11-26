@@ -4,7 +4,7 @@ export const characters = [
     {
         header: 'Introduction',
         title: 'This is You',
-        photo: '1.png',
+        photo: '4.jpg',
         position: { x: 150, y: 200 },
         content: <div>
         <p>
@@ -29,7 +29,7 @@ export const characters = [
     {
         header: 'On the Outskirts Part 1',
         title: 'The Willing Outlier',
-        photo: '2.png',
+        photo: 'outlier.jpg',
         position: { x: 200, y: 300 },
         content: <div>
             <p>
@@ -49,7 +49,7 @@ export const characters = [
     {
         header: 'On the Outskirts Part 2',
         title: 'The Brain',
-        photo: '3.png',
+        photo: 'brain.jpg',
         position: { x: 100, y: 300 },
         content: <div>
             <p>
@@ -63,7 +63,7 @@ export const characters = [
     {
         header: 'On the Outskirts Part 3',
         title: 'No.0',
-        photo: '4.png',
+        photo: '0.jpg',
         position: { x: 0, y: 300 },
         content: <div>
             <p>
@@ -80,7 +80,7 @@ export const characters = [
     {
         header: 'Family Part 1',
         title: 'No. 5',
-        photo: '5.png',
+        photo: '5.jpg',
         position: { x: 50, y: 200 },
         content: <div>
             <p>
@@ -97,7 +97,7 @@ export const characters = [
     {
         header: 'Family Part 2',
         title: 'No.3',
-        photo: '6.png',
+        photo: '3.jpg',
         position: { x: 250, y: 200 },
         content: <div>
             <p>
@@ -114,7 +114,7 @@ export const characters = [
     {
         header: 'Family Part 3',
         title: 'No.2',
-        photo: '7.png',
+        photo: '2.jpg',
         position: { x: 350, y: 200 },
         content: <div>
             <p>
@@ -134,7 +134,7 @@ export const characters = [
     {
         header: 'The Elites Part 1',
         title: 'No.1',
-        photo: '8.png',
+        photo: '1.jpg',
         position: { x: 450, y: 200 },
         content: <div>
             <p>
@@ -151,7 +151,7 @@ export const characters = [
     {
         header: 'The Elites Part 2',
         title: 'The Eye',
-        photo: '9.png',
+        photo: 'eye.jpg',
         position: { x: 250, y: 100 },
         content: <div>
             <p>
@@ -168,7 +168,7 @@ export const characters = [
     {
         header: 'The Elites Part 3',
         title: 'The King',
-        photo: '10.png',
+        photo: 'king.jpg',
         position: { x: 150, y: 0 },
         content: <div>
             <p>
@@ -185,8 +185,8 @@ export const characters = [
     {
         header: 'Conclusion',
         title: 'The Universal Empire',
-        photo: '10.png',
-        position: { x: 0, y: 0 },
+        photo: '',
+        position: { x: -Number.MAX_SAFE_INTEGER, y: -Number.MAX_SAFE_INTEGER },
         content: <div>
             <p>
             That’s it No.4, The Male Social Hierarchy: 

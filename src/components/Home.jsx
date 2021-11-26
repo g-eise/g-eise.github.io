@@ -207,6 +207,7 @@ const EssayTransitionContainer = styled.div`
 	}
 
 	.transition-img {
+		object-fit: cover;
 		position: fixed;
 		border-radius: 5px;
 	}
@@ -269,7 +270,7 @@ const Home = () => {
 				<div className='sidebar'>
 					<Link to={`/${BIBLIOGRAPHY}`}>Bibliography</Link>
 					<Link to={`/${CREDITS}`}>Credits</Link>
-					{characters.length > lock && 
+					{(characters.length-1) > lock && 
 						<div onClick={() => setUnlockModalOpen(true)} >Reading Mode</div>
 					}
 				</div>
@@ -279,11 +280,9 @@ const Home = () => {
 				</div>
 			</div>
 
-			{characters.length <= lock && 
+			{(characters.length-1) <= lock && 
 				<div className='essay'>
-					{characters.map((_, index) => 
-					<Essay key={index} index={index} noImage />
-					)}
+					<Essay index={characters.length-1} noImage />
 				</div>
 			}
 
