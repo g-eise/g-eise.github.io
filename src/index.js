@@ -40,10 +40,10 @@ const sources = {
 	],
 	'Secondary Consulted': [
 		['Allen, Walter. “The Theme of the Suitors in the Odyssey.” Transactions and Proceedings of the American Philological Association 70 (1939): 104–24.', 'https://doi.org/10.2307/283079'],
+		['Fizdale, Tay. “Jonson’s Volpone and the `Real’ Antinous.” Renaissance Quarterly 26, no. 4 (1973): 454–59.','https://doi.org/10.2307/2859497'],
 		[`Panajoti, Armela. 2019. ""The Lure of The Island": The Workings In Goldings's Lord of The Flies." British and American Studies 25: 97-105.`, `http://search.proquest.com.ezproxy.library.uvic.ca/scholarly-journals/lure-island-workings-power-goldings-lord-flies/docview/2253170035/se-2`]
 	],
 	'Primary Cited': [
-		['Fizdale, Tay. “Jonson’s Volpone and the `Real’ Antinous.” Renaissance Quarterly 26, no. 4 (1973): 454–59.','https://doi.org/10.2307/2859497'],
 		['Golding, William. Lord of The Flies, Global Village Contemporary Classics, 1953.','http://kkoworld.com/kitablar/uilyam_qoldinq_milchekler_krali-eng.pdf'],
 		'Puchner, Martin, Suzanne Conklin Akbari, Wiebke Denecke, Barbara Fuchs, Caroline Levine, Pericles Lewis, Emily R. Wilson, and Emily Wilson. “Homers Odyssey.” Essay. In The Norton Anthology of World Literature A, 4th ed., A:325–602. New York, New York : W.W. Norton & Company, 2018.'
 	],
