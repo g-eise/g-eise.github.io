@@ -44,7 +44,7 @@ const horizontal = v => `h ${v} `;
 const curve = (a,b,c,d) => `q ${5*a} ${5*b}, ${5*c} ${5*d} `;
 
 const Map = ({ goToEssay }) => {
-	const { lock } = useLock();
+	const { lock, visited } = useLock();
 
 	const animated = sessionStorage.getItem("mapAnimated") === 'true';
 	if (!animated) {
@@ -56,21 +56,23 @@ const Map = ({ goToEssay }) => {
 			animation: animated?'none':'dash 3s ease-in-out'
 		}
 	}
-
+	console.log(visited)
 	return (
 		<Container>
-			<svg viewBox="-20 0 540 500">
+			<svg viewBox="-20 -20 540 500">
 				{characters.map(({position, photo}, index) => <React.Fragment key={index}>
-				<image 
-					id={`photo-${index}`}
-					x={position.x}
-					y={position.y}
-					width="50"
-					height="60" 
-					href={`/images/${photo}`}
-					onClick={() => goToEssay(index)}
-					preserveAspectRatio="xMidYMid slice"
-				/>
+					<svg style={{filter: ((index <= lock) && !visited.includes(index))?'drop-shadow(0 0 7px #ffe946)':'none'}}>
+						<image 
+							id={`photo-${index}`}
+							x={position.x}
+							y={position.y}
+							width="50"
+							height="60" 
+							href={`/images/${photo}`}
+							onClick={() => goToEssay(index)}
+							preserveAspectRatio="xMidYMid slice"
+						/>
+					</svg>
 				{(index > lock) && <>
 					<rect 
 						className='lockOverlay'

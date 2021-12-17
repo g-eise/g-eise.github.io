@@ -18,7 +18,9 @@ export const romanize = (num) => {
     }
     return roman;
 }
-
+export const Arrow = (props) => {
+    return <img {...props} className='arrow' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAApklEQVRIie3VsQ3CMBBG4Q9SQccIzMASIPagZQIYJjMwRygpoIOSAdJEoYBIKQIISGIKP+kv7Sef7s5EIpFmBkhCiPc4Yda3uHwkxzqEuEqKcQhxiQzTEOISV8zfHV7i8uKSb1Ng4975jZw7kNazw+STcrWZg8e8D589v0+ClXrRkbzAVkfV/Wmc2hYHWSApRl1L6+Icqz6EFRmOAnyLiT/ZCZFIOG6qFaYUmGD6UQAAAABJRU5ErkJggg=="/>
+}
 const BackReminder = styled.div`
     border-top: 2px solid #525252;
     padding: 1rem;
@@ -27,20 +29,20 @@ const BackReminder = styled.div`
         line-height: 2em;
         margin-left: 10px;
     }
-    img {
-        filter: invert(1);
-        height: 2em;
-    }
 `;
 
 const Essay = (props) => {
-    const { setLock, lock } = useLock();
+    const { setLock, visited, setVisited, lock } = useLock();
     const { index } = useParams();
     const parsedIndex = parseInt(props.index+1 || index);
     const { header, title, photo, content } = characters[parsedIndex-1] || {};
 
     if (lock < parsedIndex) {
         setLock(parsedIndex);
+    }
+    console.log(visited)
+    if (!visited.includes(parsedIndex-1)) {
+        setVisited([...visited, parsedIndex-1]);
     }
 
     const location = useLocation();
@@ -51,12 +53,13 @@ const Essay = (props) => {
             title={title}
             header={header}
             index={parsedIndex}
+            fadeIn={false}
         >
             {content}
             {
                 location.pathname !== `/${HOME}` &&
                 <BackReminder>
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAApklEQVRIie3VsQ3CMBBG4Q9SQccIzMASIPagZQIYJjMwRygpoIOSAdJEoYBIKQIISGIKP+kv7Sef7s5EIpFmBkhCiPc4Yda3uHwkxzqEuEqKcQhxiQzTEOISV8zfHV7i8uKSb1Ng4975jZw7kNazw+STcrWZg8e8D589v0+ClXrRkbzAVkfV/Wmc2hYHWSApRl1L6+Icqz6EFRmOAnyLiT/ZCZFIOG6qFaYUmGD6UQAAAABJRU5ErkJggg=="/>
+                    <Arrow />
                     <span>Click ‘back’ in the top left-hand corner and scroll down to see a new section of the Home Page!</span>
                 </BackReminder>
             }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
 import { HOME } from '../utils/navigation';
 import { useLock } from '../utils/hooks';
+import { characters } from '../utils/characters';
 
 
 const IntroText = styled.h1`
@@ -48,15 +49,21 @@ const Intro = () => {
     const { setLock } = useLock();
     const [step, setStep] = useState(0);
     const navigate = useNavigate();
+    const [canGoToNextStep, setCanGoToNextStep] = useState(true);
 
     const goToNextStep = useCallback(() => {
+        if (!canGoToNextStep) return;
+        setCanGoToNextStep(false)
+        setTimeout(() => {
+            setCanGoToNextStep(true)
+        }, 2000);
         if(step + 1 === introText.length) {
             setTimeout(() => {
                 navigate(HOME);
             }, 2000);
         }
         setStep(step + 1);
-    }, [step, navigate]);
+    }, [step, navigate, canGoToNextStep]);
 
     useEffect(() => {
         setLock(0);
@@ -72,6 +79,10 @@ const Intro = () => {
 
     return (
         <Backdrop onClick={goToNextStep}>
+            {/* preload images */}
+            {characters.map(c => <img style={{display: 'none'}} key={c.photo} alt="" src={`/images/${c.photo}`} />)} 
+            {/* -------------- */}
+
             {introText.map((text, idx) => <IntroText key={idx} className={idx === step?'':'invisible'}>{text}</IntroText>)}
             <div className='continueText'>Press any key to continue...</div>
         </Backdrop>

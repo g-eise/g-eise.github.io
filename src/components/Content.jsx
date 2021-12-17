@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { HOME } from '../utils/navigation';
 
 const Container = styled.div`
-    /* animation: fade_in .5s ease-in-out; */
+    ${props => props.fadeIn ? 'animation: fade_in .5s ease-in-out;' : ''}
     h3 {
         font-family: 'Marcellus SC';
         font-size: 200%;
@@ -66,12 +66,12 @@ const Container = styled.div`
     }
 `;
 
-const Content = ({title, header, image, children}) => {
+const Content = ({title, header, image, children, fadeIn=true}) => {
     const location = useLocation();
     return (
         <div>
              {location.pathname !== `/${HOME}` && <BackBtn />}
-             <Container>
+             <Container fadeIn={fadeIn}>
                  {title && <h3>
                             <span>
                                 {header && <><span className='content-header'>{header}</span><span>: </span></>}

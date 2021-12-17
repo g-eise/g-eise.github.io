@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import { BIBLIOGRAPHY, CREDITS, READ } from '../utils/navigation';
+import { BIBLIOGRAPHY, CREDITS, INSTRUCTIONS, METHODS, READ } from '../utils/navigation';
 import { useLock } from '../utils/hooks';
 import Map from './Map';
 import { characters } from '../utils/characters';
-import Essay from './Essay';
+import Essay, { Arrow } from './Essay';
 
   
 const Container = styled.div`
@@ -44,6 +44,7 @@ const Container = styled.div`
 			width: 100%;
 		}
 		#title {
+			margin-bottom: .3em;
 			text-align: center;
 			font-size: 4em;
 			font-weight: 300;
@@ -57,7 +58,7 @@ const Container = styled.div`
 			flex-direction: column;            
 		}
 	}
-	.essay {
+	.conclusion {
 		border-top: 4px solid #6a6a6a;
 		h3 {
 			font-family: 'Marcellus SC';
@@ -213,6 +214,16 @@ const EssayTransitionContainer = styled.div`
 	}
 `;
 
+const ConclusionReminder = styled.div`
+	cursor: pointer;
+	display: flex;
+	position:absolute;
+	right: 30px;
+	bottom: 20px;
+	font-family: 'Marcellus SC';
+	font-size: 24px;
+`;
+
 const EsssayTransition = ({ index }) => {
 	const navigate = useNavigate();
 	const { photo } = characters[index];
@@ -268,6 +279,8 @@ const Home = () => {
 			<div className='header'>
 
 				<div className='sidebar'>
+					<Link to={`/${INSTRUCTIONS}`}>Instructions</Link>
+					<Link to={`/${METHODS}`}>Methods</Link>
 					<Link to={`/${BIBLIOGRAPHY}`}>Bibliography</Link>
 					<Link to={`/${CREDITS}`}>Credits</Link>
 					{(characters.length-1) > lock && 
@@ -277,11 +290,19 @@ const Home = () => {
 				<div className="content">
 					<h3 id='title'>Lord of the Odyssey</h3>
 					<Map goToEssay={setTransitonToEssay} />
+					{(characters.length-1) <= lock && 
+						<ConclusionReminder
+							onClick={()=>document.querySelector('.conclusion').scrollIntoView({ behavior: 'smooth', block: 'start' })}
+						>
+							<span style={{lineHeight: '2em'}}>Conclusion</span>
+							<Arrow style={{transform: 'rotate(90deg)'}} />
+						</ConclusionReminder>
+					}
 				</div>
 			</div>
 
 			{(characters.length-1) <= lock && 
-				<div className='essay'>
+				<div className='conclusion'>
 					<Essay index={characters.length-1} noImage />
 				</div>
 			}

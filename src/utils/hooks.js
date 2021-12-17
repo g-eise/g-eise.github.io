@@ -13,7 +13,18 @@ export const useLock = () => {
     if (!sessionStorage.getItem("unlocked")) {
 		sessionStorage.setItem("unlocked", 0)
 	}
+
+    if (!sessionStorage.getItem("visited")) {
+		sessionStorage.setItem("visited", JSON.stringify([]))
+	}
 	const lock = parseInt(sessionStorage.getItem("unlocked"));
+
+    const visited = JSON.parse(sessionStorage.getItem("visited"))
+
+    const setVisited = useCallback((v) => {
+        sessionStorage.setItem("visited", JSON.stringify(v));
+        forceRefresh()
+    }, [forceRefresh]);
 
     const unlockAll = useCallback(() => {
         sessionStorage.setItem("unlocked", Number.MAX_SAFE_INTEGER);
@@ -27,6 +38,8 @@ export const useLock = () => {
 
     return {
         lock,
+        visited,
+        setVisited,
         unlockAll,
         setLock
     }
